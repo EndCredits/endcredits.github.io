@@ -1,0 +1,215 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Build a Kernel for Redmi K30 5G by your self. | Crepuscular's Blog</title><meta name="author" content="Crepuscular Hans"><meta name="copyright" content="Crepuscular Hans"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="为自己的 Redmi K30 5G 编译一个 Linux 内核吧~ | 顺便记录一下自己编译内核的历程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Build a Kernel for Redmi K30 5G by your self.">
+<meta property="og:url" content="https://endcredits.github.io/Crepuscular-Blog/post/Build-Kernel.html">
+<meta property="og:site_name" content="Crepuscular&#39;s Blog">
+<meta property="og:description" content="为自己的 Redmi K30 5G 编译一个 Linux 内核吧~ | 顺便记录一下自己编译内核的历程">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://camo.githubusercontent.com/b5d933cd654170ee36b79df0e26df2bc772efa7c36bd2644f8a1cd7744061f69/68747470733a2f2f66646e322e67736d6172656e612e636f6d2f76762f706963732f7869616f6d692f7869616f6d692d7265646d692d6b33302d35672d322e6a7067">
+<meta property="article:published_time" content="2022-07-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-09-26T00:28:42.349Z">
+<meta property="article:author" content="Crepuscular Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://camo.githubusercontent.com/b5d933cd654170ee36b79df0e26df2bc772efa7c36bd2644f8a1cd7744061f69/68747470733a2f2f66646e322e67736d6172656e612e636f6d2f76762f706963732f7869616f6d692f7869616f6d692d7265646d692d6b33302d35672d322e6a7067"><link rel="shortcut icon" href="/Crepuscular-Blog/img/favicon.png"><link rel="canonical" href="https://endcredits.github.io/Crepuscular-Blog/post/Build-Kernel"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/Crepuscular-Blog/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/Crepuscular-Blog/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Build a Kernel for Redmi K30 5G by your self.',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-09-26 08:28:42'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://avatars.githubusercontent.com/u/39017895?v=4" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/Crepuscular-Blog/archives/"><div class="headline">Articles</div><div class="length-num">4</div></a><a href="/Crepuscular-Blog/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/Crepuscular-Blog/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/Crepuscular-Blog/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/Crepuscular-Blog/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/Crepuscular-Blog/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://camo.githubusercontent.com/b5d933cd654170ee36b79df0e26df2bc772efa7c36bd2644f8a1cd7744061f69/68747470733a2f2f66646e322e67736d6172656e612e636f6d2f76762f706963732f7869616f6d692f7869616f6d692d7265646d692d6b33302d35672d322e6a7067')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/Crepuscular-Blog/">Crepuscular's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/Crepuscular-Blog/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/Crepuscular-Blog/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/Crepuscular-Blog/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Build a Kernel for Redmi K30 5G by your self.</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-07-19T16:00:00.000Z" title="Created 2022-07-20 00:00:00">2022-07-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-09-26T00:28:42.349Z" title="Updated 2022-09-26 08:28:42">2022-09-26</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Build a Kernel for Redmi K30 5G by your self."><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>为自己的 Redmi K30 5G 编译一个 Linux 内核吧~ | 顺便记录一下自己编译内核的历程</p>
+<span id="more"></span>
+
+<h2 id="1-系统软件包"><a href="#1-系统软件包" class="headerlink" title="1.系统软件包"></a>1.系统软件包</h2><p>不同的系统需要不同的软件包，其实下面的软件包已经足以支撑整个 AOSP 的编译，</p>
+<ol>
+<li><p>Ubuntu&#x2F;Debian 系:</p>
+ <figure class="highlight q"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs q">sudo apt-<span class="hljs-built_in">get</span> install git-core gnupg flex bison build-essential zip curl zlib1g-<span class="hljs-built_in">dev</span> gcc-multilib g++-multilib libc6-<span class="hljs-built_in">dev</span>-i386 libncurses5 lib32ncurses5-<span class="hljs-built_in">dev</span> x11proto-core-<span class="hljs-built_in">dev</span> libx11-<span class="hljs-built_in">dev</span> lib32z1-<span class="hljs-built_in">dev</span> libgl1-mesa-<span class="hljs-built_in">dev</span> libxml2-utils xsltproc unzip fontconfig<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>REHL&#x2F;CentOS&#x2F;Alma&#x2F;Rocky&#x2F;Fedora 系:</p>
+ <figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-symbol">dnf</span> install <span class="hljs-comment">@development-tools android-tools automake bison bzip2 bzip2-libs ccache curl dpkg-dev gcc gcc-c++ gperf libstdc++.i686 libxml2-devel lz4-libs lzop make maven ncurses-compat-libs openssl-devel pngcrush python python3 python3-mako python-mako python-networkx schedtool squashfs-tools syslinux-devel zip zlib-devel zlib-devel.i686 </span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>openSUSE 系:</p>
+ <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">sudo</span> zypper install bison curl flex git gnupg gperf libesd-devel liblz4-<span class="hljs-number">1</span> ncurses-devel libSDL-devel python-wxWi dgets-devel libxml2-<span class="hljs-number">2</span> libxml2-tools lzop  schedtool squashfs libxslt1 zip zlib-devel make gcc-c++ glibc-devel-<span class="hljs-number">32</span>bit ncurses-devel-<span class="hljs-number">32</span>bit readline-devel-<span class="hljs-number">32</span>bit libz1-<span class="hljs-number">32</span>bit &amp;&amp; sudo zypper install --type pattern devel_basis<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>Arch 系:</p>
+<p> 如果直接使用 AUR 中提供的 <code>aosp-devel</code> 包和 <code>lineageos-devel</code> 包将会非常方便 (下面使用 yay 作为示例)</p>
+<p> 注意 您必须启用 <code>multilib</code> 仓库</p>
+ <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">yay</span> -S lineageos-devel<br>sudo pacman -S libxcrypt-compat lib32-libxcrypt<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>Gentoo&#x2F;LFS 等用户</p>
+<p> 我相信你们已经拥有了自己找软件包的能力，嗯</p>
+</li>
+</ol>
+<h2 id="2-交叉编译工具链"><a href="#2-交叉编译工具链" class="headerlink" title="2. 交叉编译工具链"></a>2. 交叉编译工具链</h2><p>众所周知，咱们的电脑是 x86 架构的，如果直接按照 x86 指令集进行编译，那么身为 arm 阵营的手机是理解不了我们编译的内核的，所以我们就需要<code>交叉编译</code>这个工具来帮助电脑把他的语言”翻译”成我们的手机可以理解的的语言</p>
+<p>我们根据 Google 的行为，选择 <code>clang</code> 作为我们的交叉编译工具链，这里我们使用我编译的 <code>crepuscular clang</code> ，或者你也可以使用 <code>proton clang</code> 等等，大同小异</p>
+<p>首先下载 clang :</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">mkdir -p ~/toolchains <span class="hljs-comment">#或者换成任意你想要把 clang 放在那里的地方</span><br><br>git clone https:<span class="hljs-regexp">//gi</span>tlab.com<span class="hljs-regexp">/EndCredits/</span>clang-crepuscular.git --depth=<span class="hljs-number">1</span> ~<span class="hljs-regexp">/toolchains/</span>clang-crepuscular <span class="hljs-comment">#记得要跟上面一样的目录</span><br></code></pre></td></tr></table></figure>
+
+<p>然后为 clang 添加环境变量</p>
+<p>将以下内容添加到 <code>~/.bashrc</code> 或者 <code>~/.zshrc</code></p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arcade">PATH=~<span class="hljs-regexp">/toolchains/</span>clang-crepuscular/bin:<span class="hljs-symbol">$PAT</span>H<br></code></pre></td></tr></table></figure>
+
+<p>验证一下我们成功了没有，运行结果里有 crepuscular 就好啦</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">clang <span class="hljs-comment">--version</span><br></code></pre></td></tr></table></figure>
+
+<p>到这里系统的准备工作就结束啦</p>
+<h2 id="3-准备内核源码并编译"><a href="#3-准备内核源码并编译" class="headerlink" title="3. 准备内核源码并编译"></a>3. 准备内核源码并编译</h2><p>这里我们使用我修改过的内核源码，从 Github 上 clone</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">git clone https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/EndCredits/</span>android_kernel_xiaomi_sm7250.git -b <span class="hljs-number">12.0</span>-main ~<span class="hljs-regexp">/kernel/</span>sm7250<br></code></pre></td></tr></table></figure>
+
+<p>因为我的内核内置了编译脚本，所以可以直接用，其实别的支持打包 dtbo 的 4.19 内核里这个脚本也可以用，只不过需要改一下 defconfig 的名字</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs arcade">cd ~<span class="hljs-regexp">/kernel/</span>sm7250<br>./build.sh <span class="hljs-built_in">all</span><br></code></pre></td></tr></table></figure>
+
+<p>编译完成之后就可以获得一个可以刷入的内核包啦</p>
+<h2 id="4-手动编译"><a href="#4-手动编译" class="headerlink" title="4. 手动编译"></a>4. 手动编译</h2><p>其实上面的编译脚本就是把下面这些命令一股脑扔了进去</p>
+<p>首先我们进入到内核的源码目录</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arcade">cd ~<span class="hljs-regexp">/kernel/</span>sm7250<br></code></pre></td></tr></table></figure>
+
+<p>然后我们会用到 <code>make</code> 这个工具，首先我们来告诉编译系统需要往我们的内核里编译什么东西，也就是 <code>defconfig</code> ，如前文所言，这个文件描述了我们的内核里有什么功能，每个机型一般都不一样，你需要找到自己机型对应的配置文件，对于现在的 arm64 机型来说，它一般放置在 <code>arch/arm64/configs/</code> 下，我们 <code>picasso</code> 默认的 <code>defconfig</code> 是 <code>arch/arm64/configs/vendor/picasso_user_defconfig</code> ，我们略去前面复杂的路径 (因为 <code>ARCH=arm64</code> 已经告诉了 <code>make</code> 应该到 <code>arm64</code> 文件夹中来找这个文件)</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">make <span class="hljs-attribute">ARCH</span>=arm64 <span class="hljs-attribute">LLVM</span>=1 <span class="hljs-attribute">O</span>=../out -j$(nproc --all) vendor/picasso_user_defconfig<br></code></pre></td></tr></table></figure>
+
+<p>上面的命令中，<code>LLVM=1</code> 的作用是启用 <code>LLVM/clang</code> 工具链作为我们的内核编译工具，不然它默认会去寻找 <code>gcc</code> 作为编译工具，<code>-j$(nproc --all)</code> 是告诉编译系统使用所有 CPU 线程并行编译，<code>-j</code>参数后面给出的数字就是你想要同时使用的 CPU 线程数</p>
+<p>如果你想要改变编译进内核的东西，你可以使用 <code>menuconfig</code> 来调整这个文件</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">make <span class="hljs-attribute">ARCH</span>=arm64 <span class="hljs-attribute">LLVM</span>=1 <span class="hljs-attribute">O</span>=../out -j$(nproc --all) menuconfig<br></code></pre></td></tr></table></figure>
+
+<p>它会为你打开一个非常漂亮的界面，你可以选择启用或者关闭各项内核的功能，如果没有这方面的需求，直接用默认的就好，然后就可以编译内核啦</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">make <span class="hljs-attribute">ARCH</span>=arm64 <span class="hljs-attribute">LLVM</span>=1 <span class="hljs-attribute">CROSS_COMPILE</span>=aarch64-linux-gnu- <span class="hljs-attribute">CROSS_COMPILE_COMPAT</span>=arm-linux-gnueabi- <span class="hljs-attribute">CLANG_TRIPLE</span>=aarch64-linux-gnu- <span class="hljs-attribute">O</span>=../out -j$(nproc --all)<br></code></pre></td></tr></table></figure>
+
+<p>等上一会，内核的编译就完成啦，不过这时候我们得到的内核还只是一个 <code>Image</code>，我们还需要 <code>AnyKernel</code> 来帮助我们把它刷入手机</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">cd ..<span class="hljs-regexp">/out/</span>arch<span class="hljs-regexp">/arm64/</span>boot<br>git clone https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/EndCredits/</span>AnyKernel3 -b picasso anykernel<br></code></pre></td></tr></table></figure>
+
+<p>这里的 <code>anykernel</code> 是修改过的，只适用于 <code>picasso</code>，如果你想给你的手机也制作一份的话，可以参考这里: </p>
+<p><a target="_blank" rel="noopener" href="https://github.com/EndCredits/AnyKernel3/commit/ab7be4efcf3b4d11ec33728501d361f63823d393">ab7be4efcf     anykernel: Adapt to Rosemary kernel for tiffany.</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/EndCredits/AnyKernel3/commit/ca166c32e3b98990b4747c446a7252ca6d760460">ca166c32e3     adapt to picasso</a></p>
+<p>然后我们把所有的 dtb 文件都连接成一个，方便我们刷入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">find ./dts/vendor/qcom -name <span class="hljs-string">&#x27;*.dtb&#x27;</span> -<span class="hljs-built_in">exec</span> <span class="hljs-built_in">cat</span> &#123;&#125; + &gt; ./dtb;<br></code></pre></td></tr></table></figure>
+
+<p>然后就可以开始打包啦</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">cp Image .<span class="hljs-regexp">/anykernel/</span> &amp;&amp; cp dtb .<span class="hljs-regexp">/anykernel/</span> &amp;&amp; cp dtbo.img .<span class="hljs-regexp">/anykernel/</span><br><br>zip -q -r Kernel-$(date <span class="hljs-string">&#x27;+%Z-%Y-%m-%d-%H%M&#x27;</span>)-$(make kernelversion)-.zip .<span class="hljs-regexp">/anykernel/</span>*<br></code></pre></td></tr></table></figure>
+
+<p>这样，内核的打包就到此结束，把上面得到的压缩文件放入手机，就可以愉快的刷入啦</p>
+<hr>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="https://endcredits.github.io/Crepuscular-Blog">Crepuscular Hans</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://endcredits.github.io/Crepuscular-Blog/post/Build-Kernel.html">https://endcredits.github.io/Crepuscular-Blog/post/Build-Kernel.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://camo.githubusercontent.com/b5d933cd654170ee36b79df0e26df2bc772efa7c36bd2644f8a1cd7744061f69/68747470733a2f2f66646e322e67736d6172656e612e636f6d2f76762f706963732f7869616f6d692f7869616f6d692d7265646d692d6b33302d35672d322e6a7067" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/Crepuscular-Blog/post/%E5%87%9B%E5%87%9B%E7%9A%84ROM%E8%AF%BE%E5%A0%82-%E7%AC%94%E8%AE%B0.html"><img class="prev-cover" src="https://avatars.githubusercontent.com/u/30337499?v=4" onerror="onerror=null;src='/Crepuscular-Blog/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">凛凛的ROM课堂 -- 笔记</div></div></a></div><div class="next-post pull-right"><a href="/Crepuscular-Blog/post/hello-world.html"><img class="next-cover" src="https://s2.loli.net/2022/09/26/DsNVLKnt1qaW3y7.jpg" onerror="onerror=null;src='/Crepuscular-Blog/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Hello World</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://avatars.githubusercontent.com/u/39017895?v=4" onerror="this.onerror=null;this.src='/Crepuscular-Blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Crepuscular Hans</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/Crepuscular-Blog/archives/"><div class="headline">Articles</div><div class="length-num">4</div></a><a href="/Crepuscular-Blog/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/Crepuscular-Blog/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/EndCredits"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Welcome to Crepuscular's Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%B3%BB%E7%BB%9F%E8%BD%AF%E4%BB%B6%E5%8C%85"><span class="toc-number">1.</span> <span class="toc-text">1.系统软件包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7%E9%93%BE"><span class="toc-number">2.</span> <span class="toc-text">2. 交叉编译工具链</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%87%86%E5%A4%87%E5%86%85%E6%A0%B8%E6%BA%90%E7%A0%81%E5%B9%B6%E7%BC%96%E8%AF%91"><span class="toc-number">3.</span> <span class="toc-text">3. 准备内核源码并编译</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%89%8B%E5%8A%A8%E7%BC%96%E8%AF%91"><span class="toc-number">4.</span> <span class="toc-text">4. 手动编译</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/Crepuscular-Blog/post/2022-Chinese-national-day.html" title="Happy birthday to my motherland -- China!"><img src="http://x0.ifengimg.com/res/2019/855A7E7B6D0AF80A577513EBE5DD64C969FFE6A9_size269_w600_h338.jpeg" onerror="this.onerror=null;this.src='/Crepuscular-Blog/img/404.jpg'" alt="Happy birthday to my motherland -- China!"/></a><div class="content"><a class="title" href="/Crepuscular-Blog/post/2022-Chinese-national-day.html" title="Happy birthday to my motherland -- China!">Happy birthday to my motherland -- China!</a><time datetime="2022-09-30T16:00:00.000Z" title="Created 2022-10-01 00:00:00">2022-10-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/Crepuscular-Blog/post/%E5%87%9B%E5%87%9B%E7%9A%84ROM%E8%AF%BE%E5%A0%82-%E7%AC%94%E8%AE%B0.html" title="凛凛的ROM课堂 -- 笔记"><img src="https://avatars.githubusercontent.com/u/30337499?v=4" onerror="this.onerror=null;this.src='/Crepuscular-Blog/img/404.jpg'" alt="凛凛的ROM课堂 -- 笔记"/></a><div class="content"><a class="title" href="/Crepuscular-Blog/post/%E5%87%9B%E5%87%9B%E7%9A%84ROM%E8%AF%BE%E5%A0%82-%E7%AC%94%E8%AE%B0.html" title="凛凛的ROM课堂 -- 笔记">凛凛的ROM课堂 -- 笔记</a><time datetime="2022-09-26T04:23:24.000Z" title="Created 2022-09-26 12:23:24">2022-09-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/Crepuscular-Blog/post/Build-Kernel.html" title="Build a Kernel for Redmi K30 5G by your self."><img src="https://camo.githubusercontent.com/b5d933cd654170ee36b79df0e26df2bc772efa7c36bd2644f8a1cd7744061f69/68747470733a2f2f66646e322e67736d6172656e612e636f6d2f76762f706963732f7869616f6d692f7869616f6d692d7265646d692d6b33302d35672d322e6a7067" onerror="this.onerror=null;this.src='/Crepuscular-Blog/img/404.jpg'" alt="Build a Kernel for Redmi K30 5G by your self."/></a><div class="content"><a class="title" href="/Crepuscular-Blog/post/Build-Kernel.html" title="Build a Kernel for Redmi K30 5G by your self.">Build a Kernel for Redmi K30 5G by your self.</a><time datetime="2022-07-19T16:00:00.000Z" title="Created 2022-07-20 00:00:00">2022-07-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/Crepuscular-Blog/post/hello-world.html" title="Hello World"><img src="https://s2.loli.net/2022/09/26/DsNVLKnt1qaW3y7.jpg" onerror="this.onerror=null;this.src='/Crepuscular-Blog/img/404.jpg'" alt="Hello World"/></a><div class="content"><a class="title" href="/Crepuscular-Blog/post/hello-world.html" title="Hello World">Hello World</a><time datetime="1970-01-01T00:00:00.000Z" title="Created 1970-01-01 08:00:00">1970-01-01</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Crepuscular Hans</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/Crepuscular-Blog/js/utils.js"></script><script src="/Crepuscular-Blog/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
