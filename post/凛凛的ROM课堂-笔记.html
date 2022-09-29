@@ -14,7 +14,7 @@
 <meta property="og:description" content="前一段 b 站直播凛凛没开麦… 斗胆加上一点点自己的理解，也记录一下自己做 rom 的一点点经验，算是为开源社区贡献一份自己微薄的力量 基本结构最基础的文件有以下几个  1cce87ff thyme: Initial tree from lisa  1234567891011121314ROOT|-Android.bp|-Android.mk|-AndroidProducts.mk|-BoardC">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-09-26T04:23:24.000Z">
-<meta property="article:modified_time" content="2022-09-28T15:35:31.197Z">
+<meta property="article:modified_time" content="2022-09-29T05:44:14.383Z">
 <meta property="article:author" content="Crepuscular Hans">
 <meta name="twitter:card" content="summary">
     
@@ -105,7 +105,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">基本结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%83%E4%BB%AC%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">它们有什么用?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E7%BB%AD%E5%B7%A5%E4%BD%9C"><span class="toc-number">3.</span> <span class="toc-text">后续工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%81%E6%9C%89-blobs"><span class="toc-number">4.</span> <span class="toc-text">私有 blobs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vbmeta-%E4%B8%8E-dtbo"><span class="toc-number">5.</span> <span class="toc-text">vbmeta 与 dtbo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SELinux"><span class="toc-number">6.</span> <span class="toc-text">SELinux</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VINTF"><span class="toc-number">7.</span> <span class="toc-text">VINTF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BootControl-HAL"><span class="toc-number">8.</span> <span class="toc-text">BootControl HAL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Build-Flags"><span class="toc-number">9.</span> <span class="toc-text">Build Flags</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IMS-amp-amp-Telephony"><span class="toc-number">10.</span> <span class="toc-text">IMS &amp;&amp; Telephony</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">基本结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%83%E4%BB%AC%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">它们有什么用?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E7%BB%AD%E5%B7%A5%E4%BD%9C"><span class="toc-number">3.</span> <span class="toc-text">后续工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%81%E6%9C%89-blobs"><span class="toc-number">4.</span> <span class="toc-text">私有 blobs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vbmeta-%E4%B8%8E-dtbo"><span class="toc-number">5.</span> <span class="toc-text">vbmeta 与 dtbo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SELinux"><span class="toc-number">6.</span> <span class="toc-text">SELinux</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VINTF"><span class="toc-number">7.</span> <span class="toc-text">VINTF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BootControl-HAL"><span class="toc-number">8.</span> <span class="toc-text">BootControl HAL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Build-Flags"><span class="toc-number">9.</span> <span class="toc-text">Build Flags</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IMS-amp-amp-Telephony"><span class="toc-number">10.</span> <span class="toc-text">IMS &amp;&amp; Telephony</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Prebuilt-odm"><span class="toc-number">11.</span> <span class="toc-text">Prebuilt odm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Overlay"><span class="toc-number">12.</span> <span class="toc-text">Overlay</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Props"><span class="toc-number">13.</span> <span class="toc-text">Props</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Init-Scripts"><span class="toc-number">14.</span> <span class="toc-text">Init Scripts</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Configs"><span class="toc-number">15.</span> <span class="toc-text">Configs</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -431,11 +431,82 @@
 <p>这一条 commit 对于使用 A&#x2F;B 系统更新的设备来说直接 pick 就好</p>
 <h2 id="Build-Flags"><a href="#Build-Flags" class="headerlink" title="Build Flags"></a>Build Flags</h2><p>这些 Build 过程中起作用标志位主要是为了打开一些编译系统默认已经弃用的功能，不想那么麻烦的话一股脑打开就好</p>
 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs Makefile"><span class="hljs-comment"># Build</span><br>BUILD_BROKEN_DUP_RULES := true<br>BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true<br>BUILD_BROKEN_VENDOR_PROPERTY_NAMESPACE := true<br>BUILD_BROKEN_MISSING_REQUIRED_MODULES := true<br>BUILD_BROKEN_ENFORCE_SYSPROP_OWNER := true<br></code></pre></td></tr></table></figure>
+<p>对于凛凛的那个 commit ，不加的话像这样的东西就会是 error 了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs log">build/make/core/Makefile:72: warning: overriding commands for target `/home/crepuscular/Working/home/crepuscular/development/aosp/out/target/product/picasso/vendor/lib/hw/audio.primary.lito.so&#x27;<br>build/make/core/base_rules.mk:533: warning: ignoring old commands for target `/home/crepuscular/Working/home/crepuscular/development/aosp/out/target/product/picasso/vendor/lib/hw/audio.primary.lito.so&#x27;<br></code></pre></td></tr></table></figure>
 
 <h2 id="IMS-amp-amp-Telephony"><a href="#IMS-amp-amp-Telephony" class="headerlink" title="IMS &amp;&amp; Telephony"></a>IMS &amp;&amp; Telephony</h2><blockquote>
 <p><code>e6d415f thyme: Compile IMS &amp; Telephony packages</code></p>
 </blockquote>
-<p>这一条 commit 里的内容包含了编译 <code>IMS</code> 和 <code>Telephony</code> 功能的包，<code>IMS</code> 通常跟 VOLTE 有关，Telephony 嘛，顾名思义，接打电话用的，高通设备 pick 这条 commit 就好</p>
+<p>这一条 commit 里的内容包含了编译 <code>IMS</code> 和 <code>Telephony</code> 功能的包，<code>IMS</code> 通常跟 VOLTE 有关，Telephony 嘛，顾名思义，接打电话用的，高通设备 pick 这条 commit 就好，对于 MTK 设备的话，还需要 phh 的 IMS 补丁集</p>
+<h2 id="Prebuilt-odm"><a href="#Prebuilt-odm" class="headerlink" title="Prebuilt odm"></a>Prebuilt odm</h2><blockquote>
+<p><code>adc57bd thyme: Use prebuilt odm from stock</code></p>
+</blockquote>
+<p>对于 prebuilt vendor 的设备需要原厂的 odm.img ，因为 vendor 里的东西会需要 odm 分区中的一些内容，如果我们编译的东西把它们覆盖掉了那就不好了，所以需要 prebuilt</p>
+<p>像这条 commit 里的 <code>THYME_PREBUILT</code> flag 是你自己定义的变量，不用这个也没事，你也可以在 dt 里放一个 prebuilt 文件夹，把 <code>odm.img</code> 放进去，然后 <code>BOARD_PREBUILT_ODMIMAGE</code> 对应的改成你的路径就好了，比如</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs Makefile">BOARD_PREBUILT_ODMIMAGE := <span class="hljs-variable">$(LOCAL_PATH)</span>/prebuilt/odm.img<br></code></pre></td></tr></table></figure>
+
+<p>对于上面的例子，之后就是记得在 <code>AB_OTA_PARTITION</code> 和 <code>BOARD_THYME_DYNAMIC_PARTITIONS_PARTITION_LIST</code> 里加上 odm 分区，让它一并被刷入就可以了</p>
+<h2 id="Overlay"><a href="#Overlay" class="headerlink" title="Overlay"></a>Overlay</h2><blockquote>
+<p><code>d7f7f31 thyme: overlay: Import WifiRes overlay</code></p>
+</blockquote>
+<p>严格意义上讲这里所说的 <code>overlay</code> 应该是特指 <code>Runtime Resource Overlay</code>，运行时资源叠加层，它的作用是在运行时改变某一个目标软件包的资源值，它可以覆盖原本源码里写死的值，替换成你想要的值，这对我们来说是非常有用的，因为一些功能的开启和关闭或者系统 UI 一些属性的定义 ( 比如挖孔样式 ) 都可以通过它来定义而没有必要每个设备都去修改一遍源码</p>
+<figure class="highlight plaintext"><figcaption><span>顾名思义，就是应用到 WIFI 相关软件包的资源叠加层，它的作用就是改变默认编译的 WIFI 软件包里某一些资源的值，来看这个例子</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs WifiResOverlay```"><br>&gt; $(DEVICE_PATH)/overlay/WifiResOverlayThyme/AndroidManifest.xml<br><br>```xml<br>&lt;manifest xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;<br>    package=&quot;com.wifi.resources.thyme&quot;<br>    android:verisonCode=&quot;1&quot;<br>    android:versionName=&quot;1.0&quot;&gt;<br>    &lt;application android:hasCode=&quot;false&quot; /&gt;<br>    &lt;overlay android:targetPackage=&quot;com.android.wifi.resources&quot;<br>                   android:targetName=&quot;WifiCustomization&quot;<br>                   android:isStatic=&quot;true&quot;<br>                   android:priority=&quot;0&quot; /&gt;<br>&lt;/manifest&gt;<br></code></pre></td></tr></table></figure>
+
+<p>接触过 Android 应用开发的同学应该对上面的那个文件很熟悉，它定义了一个 Android 软件包</p>
+<ul>
+<li><p><code>manifest-&gt;package</code> 属性描述了这个 overlay 包的名字</p>
+</li>
+<li><p><code>manifest-&gt;android:versionCode</code> 属性描述了这个 overlay 包的版本</p>
+</li>
+<li><p><code>manifest-&gt;android:versionName</code> 属性描述了这个 overlay 包的版本名字</p>
+</li>
+<li><p><code>overlay-&gt;android:targetPackage=</code> 属性标示了这个 overlay 包要去覆盖哪个软件包 (包名) 的资源</p>
+</li>
+<li><p><code>overlay-&gt;android:targetName</code> 属性描述了你这个 overlay 的 target 是谁</p>
+</li>
+</ul>
+<p>重要的就是这些，其他的保持默认就好</p>
+<p>然后就是写入你想要覆盖的资源标签和内容，这些可以通过逆向厂商的 overlay 来获取，或者如果你自己有什么想法也可以往这里面加，同样遵循 xml 语法，厂商的 overlay 通常放在</p>
+<blockquote>
+<p><code>/product/overlay/</code></p>
+</blockquote>
+<p>去那里面把它们揪出来，然后用 <code>apktool d &lt;包&gt;</code> 或者 jadx 解包都可以，它们的资源文件就会全部暴露出来，放到你的 overlay 对应的目录中，在上面的例子里，它是</p>
+<blockquote>
+<p><code>$(DEVICE_PATH)/overlay/WifiResOverlayThyme/res/values/</code></p>
+</blockquote>
+<p>最后就是声明这个包是一个 overlay 并且在 device.mk 里编译它</p>
+<blockquote>
+<p><code>$(DEVICE_PATH)/overlay/WifiResOverlayThyme/Android.bp</code></p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs blueprint">runtime_resource_overlay &#123;<br>    name: &quot;WifiResOverlayThyme&quot;,<br>    theme: &quot;WifiResOverlayThyme&quot;,<br>    certificate: &quot;platform&quot;,<br>    sdk_version: &quot;current&quot;,<br>    product_specific: true,<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>$(DEVICE_PATH)/device.mk</code></p>
+</blockquote>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs Makefile"><span class="hljs-comment"># Overlays</span><br>PRODUCT_PACKAGES += \<br>    WifiResOverlayThyme<br></code></pre></td></tr></table></figure>
+
+<p>加入其他的 overlay 方式也是一样的，有的时候一些 overlay 在你的厂商 overlay 里找不到的话可以去搜一下相近设备的 commit，如果有的话也可以直接采用</p>
+<p>另一种一些人比较熟悉的写法是 <code>Static Resource Overlay</code>，就是写在这种文件里的 overlay</p>
+<blockquote>
+<p><code>overlay/frameworks/base/core/res/res/values/config.xml</code></p>
+</blockquote>
+<p>这种静态资源叠加层不像 RRO 将会作为一个独立的 APK 编译进系统，而是会在编译时生效，去叠加源码中对应路径的资源值，最后你编译出来的这个源码组件就是你想要的样子，这有一个缺点就是对于那种大型组件比如 fwb 来说的话，整个重新来编译它耗时很长 ( 真的很长 )，而对于 RRO 来说，它只需要编译 RRO 的那个 APK 就可以了，好处是相对于 RRO 它的性能稍微好那么一点 ( 但也只有一点 ) ，相比之下如果性能不是那种非常非常吃紧的情况下用 RRO 会更加合算，而且这样也是 Google 推荐的做法</p>
+<h2 id="Props"><a href="#Props" class="headerlink" title="Props"></a>Props</h2><p>这些属性定义了 Android 中的一些特性是否开启或者关闭，对于 Prebuilt vendor 来说没有太麻烦，去 stock 的包里拿 build.prop 里的内容就好，而对于 oss vendor，因为自己魔改的自由度更大嘛，你就可以支持一些原本不支持的特性，关于每一条 prop 都有什么作用，可以直接去 Android Code Search 上搜索，源码中都有详细的注释</p>
+<h2 id="Init-Scripts"><a href="#Init-Scripts" class="headerlink" title="Init Scripts"></a>Init Scripts</h2><p>有一点点 Linux 基础的人都会知道这是干什么用的，不再赘述</p>
+<h2 id="Configs"><a href="#Configs" class="headerlink" title="Configs"></a>Configs</h2><blockquote>
+<p><code>b6f9728: thyme: Import audio policy configuration from CAF</code></p>
+</blockquote>
+<p>这些配置文件是 <code>AudioFlinger</code> 或者 <code>MediaProvider</code> 或者 <code>soundtrigger</code> 等系统服务需要的，比如 picasso 有这些配置文件</p>
+<blockquote>
+<p>$(DEVICE_PATH)&#x2F;audio</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs text">audio_effects.xml<br>audio_io_policy.conf<br>audio_platform_info.xml<br>audio_platform_info_intcodec.xml<br>audio_platform_info_lagoon_qrd.xml<br>audio_platform_info_qrd.xml<br>audio_policy_configuration.xml<br>audio_policy_volumes.xml<br>audio_tuning_mixer.txt<br>mixer_paths.xml<br>mixer_paths_cdp.xml<br>mixer_paths_lagoonmtp.xml<br>mixer_paths_lagoonqrd.xml<br>mixer_paths_mtp.xml<br>mixer_paths_overlay_dynamic.xml<br>mixer_paths_overlay_static.xml<br>mixer_paths_qrd.xml<br>sound_trigger_mixer_paths.xml<br>sound_trigger_mixer_paths_cdp.xml<br>sound_trigger_mixer_paths_lagoonmtp.xml<br>sound_trigger_mixer_paths_lagoonqrd.xml<br>sound_trigger_mixer_paths_qrd.xml<br>sound_trigger_platform_info.xml<br></code></pre></td></tr></table></figure>
+
+<p>Audio 的配置文件通常用于配置 Audio 路由转发以及系统的各项音频相关策略，Media 通常包含了对于系统软硬件解码器以及其他媒体的细节的描述，这些都可以直接从 stock ROM 里拿，它们一般会被放置在</p>
+<blockquote>
+<p><code>/vendor/etc</code></p>
+</blockquote>
+<p>至于需要拿取哪些文件，对于 prebuilt vendor 而言其实一个 <code>audio_policy_configuration.xml</code> 一般就足够，剩下的使用 prebuilt vendor 里的，对于 oss vendor 而言，不如一股脑全放进去，至少绝对不会少不是嘛（）</p>
 
   </div>
 </article>
@@ -461,7 +532,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">基本结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%83%E4%BB%AC%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">它们有什么用?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E7%BB%AD%E5%B7%A5%E4%BD%9C"><span class="toc-number">3.</span> <span class="toc-text">后续工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%81%E6%9C%89-blobs"><span class="toc-number">4.</span> <span class="toc-text">私有 blobs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vbmeta-%E4%B8%8E-dtbo"><span class="toc-number">5.</span> <span class="toc-text">vbmeta 与 dtbo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SELinux"><span class="toc-number">6.</span> <span class="toc-text">SELinux</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VINTF"><span class="toc-number">7.</span> <span class="toc-text">VINTF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BootControl-HAL"><span class="toc-number">8.</span> <span class="toc-text">BootControl HAL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Build-Flags"><span class="toc-number">9.</span> <span class="toc-text">Build Flags</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IMS-amp-amp-Telephony"><span class="toc-number">10.</span> <span class="toc-text">IMS &amp;&amp; Telephony</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">基本结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%83%E4%BB%AC%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">它们有什么用?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E7%BB%AD%E5%B7%A5%E4%BD%9C"><span class="toc-number">3.</span> <span class="toc-text">后续工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%81%E6%9C%89-blobs"><span class="toc-number">4.</span> <span class="toc-text">私有 blobs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vbmeta-%E4%B8%8E-dtbo"><span class="toc-number">5.</span> <span class="toc-text">vbmeta 与 dtbo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SELinux"><span class="toc-number">6.</span> <span class="toc-text">SELinux</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VINTF"><span class="toc-number">7.</span> <span class="toc-text">VINTF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BootControl-HAL"><span class="toc-number">8.</span> <span class="toc-text">BootControl HAL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Build-Flags"><span class="toc-number">9.</span> <span class="toc-text">Build Flags</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IMS-amp-amp-Telephony"><span class="toc-number">10.</span> <span class="toc-text">IMS &amp;&amp; Telephony</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Prebuilt-odm"><span class="toc-number">11.</span> <span class="toc-text">Prebuilt odm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Overlay"><span class="toc-number">12.</span> <span class="toc-text">Overlay</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Props"><span class="toc-number">13.</span> <span class="toc-text">Props</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Init-Scripts"><span class="toc-number">14.</span> <span class="toc-text">Init Scripts</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Configs"><span class="toc-number">15.</span> <span class="toc-text">Configs</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
