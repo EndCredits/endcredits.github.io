@@ -574,7 +574,7 @@ body {
   }
 }
 .max-width {
-  max-width: 56rem;
+  max-width: 85rem;
 }
 @media (max-width: 480px) {
   .px3 {
@@ -622,8 +622,6 @@ body {
   border-radius: 5px;
   background-size: 50px 50px;
   background-repeat: no-repeat;
-  filter: grayscale(100%);
-  -webkit-filter: grayscale(100%);
 }
 #header #nav {
   color: #2bbc8a;
@@ -664,10 +662,6 @@ body {
 }
 #header #nav ul li:last-child a {
   margin-right: 0;
-}
-#header:hover #logo {
-  filter: none;
-  -webkit-filter: none;
 }
 @media screen and (max-width: 480px) {
   #header #title {
@@ -1513,45 +1507,73 @@ article .content .caption {
   content: ")";
 }
 .highlight {
-  background: #1b1918;
-  color: #a8a19f;
+  background: #000;
+  color: #f8f8f8;
 }
 .highlight .code .comment,
 .highlight .code .quote {
-  color: #9c9491;
-}
-.highlight .code .variable,
-.highlight .code .template-variable,
-.highlight .code .attribute,
-.highlight .code .tag,
-.highlight .code .name,
-.highlight .code .regexp,
-.highlight .code .link,
-.highlight .code .selector-id,
-.highlight .code .selector-class {
-  color: #f22c40;
-}
-.highlight .code .number,
-.highlight .code .meta,
-.highlight .code .built_in,
-.highlight .code .builtin-name,
-.highlight .code .literal,
-.highlight .code .type,
-.highlight .code .params {
-  color: #df5320;
-}
-.highlight .code .string,
-.highlight .code .symbol,
-.highlight .code .bullet {
-  color: #7b9726;
-}
-.highlight .code .title,
-.highlight .code .section {
-  color: #407ee7;
+  color: #aeaeae;
+  font-style: italic;
 }
 .highlight .code .keyword,
-.highlight .code .selector-tag {
-  color: #6666ea;
+.highlight .code .selector-tag,
+.highlight .code .type {
+  color: #e28964;
+}
+.highlight .code .string {
+  color: #65b042;
+}
+.highlight .code .subst {
+  color: #daefa3;
+}
+.highlight .code .regexp,
+.highlight .code .link {
+  color: #e9c062;
+}
+.highlight .code .title,
+.highlight .code .section,
+.highlight .code .tag,
+.highlight .code .name {
+  color: #89bdff;
+}
+.highlight .code .class .title,
+.highlight .code .doctag {
+  text-decoration: underline;
+}
+.highlight .code .symbol,
+.highlight .code .bullet,
+.highlight .code .number {
+  color: #3387cc;
+}
+.highlight .code .params,
+.highlight .code .variable,
+.highlight .code .template-variable {
+  color: #3e87e3;
+}
+.highlight .code .attribute {
+  color: #cda869;
+}
+.highlight .code .meta {
+  color: #8996a8;
+}
+.highlight .code .formula {
+  background-color: #0e2231;
+  color: #f8f8f8;
+  font-style: italic;
+}
+.highlight .code .addition {
+  background-color: #253b22;
+  color: #f8f8f8;
+}
+.highlight .code .deletion {
+  background-color: #420e09;
+  color: #f8f8f8;
+}
+.highlight .code .selector-class {
+  color: #9b703f;
+}
+.highlight .code .selector-id {
+  color: #8b98ab;
 }
 .highlight .code .emphasis {
   font-style: italic;
