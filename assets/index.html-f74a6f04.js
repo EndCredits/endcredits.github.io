@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-63ea50e8","path":"/tags/kernel%20build/1/","title":"","lang":"en-US","frontmatter":{"layout":"Categories"},"headers":[],"git":{},"filePathRelative":null}');export{e as data};
