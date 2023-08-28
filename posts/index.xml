@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Crepuscular Hana</title>
+    <link>https://crepuscular-aosp.icu/posts/</link>
+    <description>Recent content in Posts on Crepuscular Hana</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 29 Aug 2023 02:51:46 +0800</lastBuildDate><atom:link href="https://crepuscular-aosp.icu/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>About</title>
+      <link>https://crepuscular-aosp.icu/posts/about/</link>
+      <pubDate>Tue, 29 Aug 2023 02:51:46 +0800</pubDate>
+      
+      <guid>https://crepuscular-aosp.icu/posts/about/</guid>
+      <description>Hi , Here is Hana About me | 关于 Hana, A Pro noob. | Hana, 一个菜逼 Contact me | 联系我 Tencent QQ | QQ : 2954582482 Twitter | 推特 : Twitter@EndCredits5 GitHub | GitHub : Github@EndCredits Netease Cloud Music | 网易云音乐 NCM@Crepuscular Hana Bilibili | 哔哩哔哩 : Bilibili@AnCrepuscular Telegram | Tg : @EndCredits &amp;amp;&amp;amp; @credits_offtopic Coolapk: 三片叶的花结 Motto | 人生信条 判天地之美，析万物之理，察古人之全。寡能备于天地之美，称神明之容。 &amp;ndash;《庄子•天下》
+Building dependiencies | 编译依赖 renoir:
+EndCredits/android_device_xiaomi_sm8350-common EndCredits/android_device_xiaomi_renoir EndCredits/android_kernel_xiaomi_sm8350 EndCredits/android_vendor_xiaomi_sm8350-common EndCredits/android_vendor_xiaomi_renoir EndCredits/android_vendor_xiaomi-firmware_renoir picasso:</description>
+    </item>
+    
+  </channel>
+</rss>
